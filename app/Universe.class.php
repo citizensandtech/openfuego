@@ -58,6 +58,14 @@ class Universe {
 		foreach ($authorities as $authority) {
 			$authorities_ids[] = $authority['id_str'];
 		}
+
+		##: output the list of IDs to a file for diagnostic and auditing purposes for students
+		$filename = \OpenFuego\OUTPUT_DATA.DIRECTORY_SEPARATOR."follow_network".DIRECTORY_SEPARATOR.$authority['screen_name'].". phpobj";
+		$fp = fopen($filename, "w") or die("unable to create ".$filename);
+		fwrite($fp, serialize($authority_friends_ids));
+		fclose($fp);
+		echo("Wrote ".$filename."\n");
+		
 			
 		$universe_ids = $authorities_ids;
 		
