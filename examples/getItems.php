@@ -23,7 +23,7 @@ require(__DIR__ . '../../init.php');
 use OpenFuego\app\Getter as Getter;
 
 $fuego = new Getter();
-$items = $fuego->getItems(21, 24, TRUE, TRUE); // quantity, hours, scoring, metadata
+$items = $fuego->getItems(21, 128, TRUE, TRUE); // quantity, hours, scoring, metadata
 
 print '<pre>';
 print_r($items);
@@ -34,7 +34,7 @@ print '</pre>';
 <?php foreach ($items as $item){ ?>
 
 <blockquote class="twitter-tweet">
-<a href="https://twitter.com/x/status/<?=$item<?=$item["tw_id_str"]?>"></a>
+<a href="https://twitter.com/x/status/<?=$item["tw_id_str"]?>"></a>
 </blockquote> 
 
 <?php } ?>
