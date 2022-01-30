@@ -1,3 +1,9 @@
+<html>
+<head>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</head>
+<body>
+
 <?php
 
 /**
@@ -17,9 +23,21 @@ require(__DIR__ . '../../init.php');
 use OpenFuego\app\Getter as Getter;
 
 $fuego = new Getter();
-$items = $fuego->getItems(20, 24, TRUE, TRUE); // quantity, hours, scoring, metadata
+$items = $fuego->getItems(21, 24, TRUE, TRUE); // quantity, hours, scoring, metadata
 
 print '<pre>';
 print_r($items);
 print '</pre>';
 ?>
+
+<hr>
+<?php foreach ($items as $item){ ?>
+
+<blockquote class="twitter-tweet">
+<a href="https://twitter.com/x/status/<?=$item<?=$item["tw_id_str"]?>"></a>
+</blockquote> 
+
+<?php } ?>
+
+</body>
+</html>
