@@ -8,6 +8,7 @@ use OpenFuego\app\Universe as Universe;
 use OpenFuego\app\Collector as Collector;
 use OpenFuego\lib\Logger as Logger;
 use OpenFuego\lib\TwitterHandle as TwitterHandle;
+// use Abraham\TwitterOAuth\TwitterOAuth;
 
 if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
 	die(__NAMESPACE__ . ' requires PHP 5.3.0 or higher.');
@@ -30,14 +31,14 @@ register_shutdown_function(function() {
 	Logger::fatal(__NAMESPACE__ . " collector was terminated.");
 });
 
-$twitter = new TwitterHandle();
-$twitter->get("account/verify_credentials", array("include_entities" => 0, "skip_status" => 1));
-if ($twitter->http_code !== 200) {
-	$error_message = "Cannot continue. Your Twitter credentials appear to be invalid. Error code {$twitter->http_code}";
-	Logger::info($error_message);
-	die($error_message);
-}
-unset($twitter_handle);
+// $twitter = new TwitterHandle();
+// $twitter->get("account/verify_credentials", array("include_entities" => 0, "skip_status" => 1));
+// if ($twitter->http_code !== 200) {
+// 	$error_message = "Cannot continue. Your Twitter credentials appear to be invalid. Error code {$twitter->http_code}";
+// 	Logger::info($error_message);
+// 	die($error_message);
+// }
+// unset($twitter_handle);
 
 $authorities = unserialize(\OpenFuego\AUTHORITIES);
 

@@ -33,12 +33,16 @@ else {
 	ini_set('display_errors', 0);
 }
 
-require_once(__DIR__ . '/lib/TwitterOAuth/TwitterOAuth.class.php');
-require_once(__DIR__ . '/lib/Phirehose/OAuthPhirehose.class.php');
+// For Composer
+require_once("vendor/autoload.php");
+// use Abraham\TwitterOAuth\TwitterOAuth;
+
+// require_once(__DIR__ . '/lib/TwitterOAuth/TwitterOAuth.class.php');
+require_once(__DIR__ . '/lib/Phirehose/OAuthPhirehose.php');
 
 spl_autoload_register(function($className) {
 	$className = str_replace('OpenFuego' . '\\', '', $className);
-	$className = strtr($className, '\\', DIRECTORY_SEPARATOR);	
+	$className = strtr($className, '\\', DIRECTORY_SEPARATOR);
 	$path = __DIR__ . '/' . $className . '.class.php';
 
 	if (is_readable($path)) {
