@@ -50,7 +50,7 @@ require(__DIR__ . '../../init.php');
 use OpenFuego\app\Getter as Getter;
 
 $fuego = new Getter();
-$items = $fuego->getItems(21, 128, FALSE, TRUE); // quantity, hours, scoring, metadata
+$items = $fuego->getItems(15, 24, FALSE, TRUE); // quantity, hours, scoring, metadata
 ?>
 
   
@@ -87,7 +87,7 @@ $items = $fuego->getItems(21, 128, FALSE, TRUE); // quantity, hours, scoring, me
 			  <strong class="text-primary"><img style="float:left;width:50px;height:50px; padding-right:5px;" src='<?= $item["tw_profile_image_url"] ?>'> 
           <button type="button" class="btn btn-primary"><?=$item["weighted_count"]?></button>
           <?= $item["first_user"] ?>
-          <small class="text-muted"><?=date('d M Y H:i:s Z',$item["first_seen"]) ?></small>
+          <small class="text-muted"><a class="text-muted" href="https://twitter.com/<?=$item["tw_screen_name"]?>/status/<?= $item["tw_id_str"]?>"><?=date('d M Y H:i:s Z',$item["first_seen"]) ?></a></small>
         </strong>
 	      <!--<a href='https://twitter.com/x/status/<?= $item["tw_id_str"] ?>'>See the first tweet</a>-->
         <div class="loadtweet" tweetID="<?=$item["tw_id_str"]?>"></div>
