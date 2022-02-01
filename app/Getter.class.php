@@ -24,13 +24,13 @@ class Getter {
 	
 		$date = date('Y-m-d H:i:s', $now);	
 	
-		if ($scoring) {
+		/*if ($scoring) {
 			$min_weighted_count = floor($hours/2.5+8);
 			$limit = 100;	
-		} else {
-			$min_weighted_count = 1;
-			$limit = $quantity;
-		}
+		} else {*/
+  	$min_weighted_count = 1;
+		$limit = $quantity;
+		//}
 	
 		try {
 			$dbh = $this->getDbh();
