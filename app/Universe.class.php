@@ -68,13 +68,6 @@ class Universe {
 
 		print_r($authorities_ids);
 
-		##: output the list of IDs to a file for diagnostic and auditing purposes for students
-		// $filename = \OpenFuego\OUTPUT_DATA.DIRECTORY_SEPARATOR."follow_network".DIRECTORY_SEPARATOR.$authority['screen_name'].". phpobj";
-		// $fp = fopen($filename, "w") or die("unable to create ".$filename);
-		// fwrite($fp, serialize($authority_friends_ids));
-		// fclose($fp);
-		// echo("Wrote ".$filename."\n");
-
 		$universe_ids = $authorities_ids;
 
 		foreach ($authorities as $authority) {
@@ -86,6 +79,14 @@ class Universe {
 				Logger::fatal($error_message);
 				die();
 			}
+		
+      // output the list of IDs to a file for diagnostic and auditing purposes for students
+		  $filename = \OpenFuego\OUTPUT_DATA.DIRECTORY_SEPARATOR."follow_network".DIRECTORY_SEPARATOR.$authority['screen_name'].".".time().".phpobj";
+		  $fp = fopen($filename, "w") or die("unable to create ".$filename);
+		  fwrite($fp, serialize($authority_friends_ids));
+		  fclose($fp);
+		  echo("Wrote ".$filename."\n");
+      //end diagnostic output
 
 			$authority_friends_ids = $authority_friends_ids['ids'];
 			$universe_ids = array_merge($universe_ids, $authority_friends_ids); // append more ids to universe
