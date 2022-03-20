@@ -22,7 +22,8 @@ class Universe {
 			$sql = "
 				SELECT user_id
 				FROM openfuego_citizens
-				WHERE influence >= :min_influence;
+				WHERE influence >= :min_influence
+        ORDER BY influence;
 			";
 			$sth = $dbh->prepare($sql);
 			$sth->bindParam('min_influence', $min_influence);

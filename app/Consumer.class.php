@@ -97,27 +97,34 @@ class Consumer {
 
 			$status = json_decode($rawStatus, TRUE);	// convert JSON data into PHP array
 
-			// if data is invalid (e.g., if a user has deleted a tweet; surprisingly frequent)
-			if (is_array($status) == FALSE || !isset($status['user']['id_str'])) {
-				print_r($rawStatus); // debugging
-	 			Logger::debug('Status is invalid, continuing.');
-				sleep(15); // debugging
-				continue; // skip it
+			// if data is invalid
+			if (is_array($status) == FALSE) {
+				Logger::debug('Tweet data is invalid. Printing the raw JSON on the next line:');
+				Logger::debug($rawStatus);
+				continue; // skip to the next item in the loop
 			}
 
-			if (array_key_exists(0, $status['entities']['urls']) == FALSE) { // if tweet does not contain link
-				continue;	// skip it
+			if (array_key_exists('delete', $status)) {
+	 			Logger::debug('Skipping deleted tweet, id ' . $status['delete']['status']['id_str'] . '.');
+				continue; // skip to the next item in the loop
+			}
+
+			if (array_key_exists(0, $status['entities']['urls']) == FALSE) { // if tweet does not contain a link
+				Logger::debug('Skipping tweet with no link, id ' . $status['id_str'] . '.');
+				// print_r($status); // debugging
+				continue; // skip to the next item in the loop
 			}
 
 			/* Weed out statuses created by undesired user. (The streaming API also returns _retweets of_
 			** statuses by desired user, which we don't want.) */
 			if (!\OpenFuego\app\Universe::isCitizen($status['user']['id_str'])) {	// if the tweeter is not a citizen
-				continue; // skip it
+				Logger::debug('Skipping tweet from non-citizen, id ' . $status['id_str'] . '.');
+				continue; // skip to the next item in the loop
 			}
 
 			$this->processUrls($status);
 
-			Logger::debug('Decoded tweet: ' . $status['user']['screen_name'] . ': ' . urldecode($status['text']));
+			Logger::debug('Decoded tweet: @' . $status['user']['screen_name'] . ': ' . urldecode($status['text']));
 
 			set_time_limit(60);
 
@@ -129,7 +136,7 @@ class Consumer {
 		fclose($fp);
 
 		// All done with this file
-		Logger::debug('Successfully processed ' . $statusCounter . ' tweets from ' . $queueFile . ' - deleting.');
+		Logger::debug('Processed ' . $statusCounter . ' tweets from ' . $queueFile . ' - deleting.');
 		unset($rawStatus);
 		unlink($queueFile);
 	}
@@ -153,6 +160,12 @@ class Consumer {
 
 			$output_url = $urlExpander->expand($expanded_url);  // sometimes "expanded url" returned by t.co is a bitly link, etc.
 			$output_url = rtrim($output_url, '/');
+
+			/* debugging */
+			// if ($output_url == '') {
+			// 	echo "### Got empty output URL. Original was " . $expanded_url . "\nPrinting urls";
+			// 	print_r($urls);
+			// }
 
 			$first_seen = $status['created_at'];
 			$first_seen = strtotime($first_seen);

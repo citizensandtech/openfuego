@@ -21,8 +21,6 @@
 								  cards: 'visible', // or visible
 								  linkColor: '#cc0000', // default is blue
 								  theme: 'light', // or dark
-							  }).then(function (el) {
-								  el.contentDocument.querySelector('.footer').style.display = 'none';
 							  });
 						});
 
@@ -87,7 +85,7 @@ $items = $fuego->getItems(20, 12, TRUE, TRUE); // quantity, hours, scoring, meta
 			  <strong class="text-primary"><img style="float:left;width:50px;height:50px; padding-right:5px;" src='<?= $item["tw_profile_image_url"] ?>'> 
           <button type="button" class="btn btn-primary"><?=$item["weighted_count"]?></button>
           <?= $item["first_user"] ?>
-          <small class="text-muted"><a class="text-muted" href="https://twitter.com/<?=$item["tw_screen_name"]?>/status/<?= $item["tw_id_str"]?>"><?=date('d M Y H:i:s Z',$item["first_seen"]) ?></a></small>
+          <small class="text-muted"><a class="text-muted" href="https://twitter.com/<?=$item["tw_screen_name"]?>/status/<?= $item["tw_id_str"]?>"><?=date('d M Y H:i:s Z',$item["first_seen"]) ?></a> <a href='<?=$item["url"]?>'>🔗</a></small>
         </strong>
 	      <!--<a href='https://twitter.com/x/status/<?= $item["tw_id_str"] ?>'>See the first tweet</a>-->
         <div class="loadtweet" tweetID="<?=$item["tw_id_str"]?>"></div>
