@@ -24,6 +24,8 @@ Follow the instructions in config.php. Create a MySQL database and enter the cre
 
 Once config.php is edited, run `fetch.php` at the command line. You may or not get further instructions, depending on whether your version of PHP is compiled with process control.
 
+You will likely need to run `composer install` on the command line to install the required packages.  Composer can be installed using homebrew, or another package manager of your choice.
+
 __Recommended option for new users:__ To run OpenFuego in verbose mode, which displays helpful errors and warnings on screen, run `fetch.php -v`.
 
 You can `kill` the two processes at any time. The script may take a few seconds to clean up before terminating. Always make sure to kill any and all old OpenFuego processes before initializing.
