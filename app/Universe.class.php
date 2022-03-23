@@ -64,7 +64,8 @@ class Universe {
 		// $authorities_ids[] = array();
 
 		foreach ($authorities as $authority) {
-			$authorities_ids[] = $authority['id_str'];
+			$authorities_ids[] = $authority->id_str;
+
 		}
 
 		print_r($authorities_ids);
@@ -72,7 +73,7 @@ class Universe {
 		$universe_ids = $authorities_ids;
 
 		foreach ($authorities as $authority) {
-			$authority_friends_ids = $twitter->get('friends/ids', array('screen_name' => $authority['screen_name']));
+			$authority_friends_ids = $twitter->get('friends/ids', array('screen_name' => $authority->screen_name));
 
 			$twitter_http_code = $twitter->getLastHttpCode();
 			if ($twitter_http_code != 200) {
@@ -82,14 +83,15 @@ class Universe {
 			}
 		
       // output the list of IDs to a file for diagnostic and auditing purposes for students
-		  $filename = \OpenFuego\OUTPUT_DATA.DIRECTORY_SEPARATOR."follow_network".DIRECTORY_SEPARATOR.$authority['screen_name'].".".time().".phpobj";
+		  $filename = \OpenFuego\OUTPUT_DATA.DIRECTORY_SEPARATOR."follow_network".DIRECTORY_SEPARATOR.$authority -> screen_name.".".time().".phpobj";
+		  
 		  $fp = fopen($filename, "w") or die("unable to create ".$filename);
 		  fwrite($fp, serialize($authority_friends_ids));
 		  fclose($fp);
 		  echo("Wrote ".$filename."\n");
       //end diagnostic output
 
-			$authority_friends_ids = $authority_friends_ids['ids'];
+			$authority_friends_ids = $authority_friends_ids -> ids;
 			$universe_ids = array_merge($universe_ids, $authority_friends_ids); // append more ids to universe
 		}
 

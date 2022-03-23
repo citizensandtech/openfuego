@@ -148,7 +148,7 @@ class UrlExpander {
 			return $shortUrl;
 		}
 
-		if (!empty($bitlyExpanded) && array_key_exists('long_url', $bitlyExpanded['data']['expand'][0])) {
+		if (!empty($bitlyExpanded) && isset($bitlyExpanded['data']['expand'][0]) && array_key_exists('long_url', $bitlyExpanded['data']['expand'][0])) {
 			$longUrl = $bitlyExpanded['data']['expand'][0]['long_url'];
 			return $longUrl;
 		}
@@ -229,17 +229,16 @@ class UrlExpander {
 
 
 	public function getCanonical($url) {
-
 		$curl = $this->getCurl();
 
 		if (preg_match('/(\?|\&|#)utm_/', $url, $matches)) {
 			$url = strstr($url, $matches[1], TRUE);
 		}
-
 		$source = $curl->getChunk($url);
-
 		$curl = NULL;
-
+		if(empty($source)) {
+			return $url;
+		}
 		$doc = new \DOMDocument;
 		@$doc->loadHTML($source);
 		unset($source);
